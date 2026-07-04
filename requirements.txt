@@ -3,3 +3,4 @@ sentence-transformers
 PyMuPDF
 ebooklib
 beautifulsoup4
+Flask

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Literatursuche</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 1rem;
+      line-height: 1.45;
+    }
+    h1 { font-size: 1.3rem; }
+    form { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+    input[type="text"], input[type="number"] {
+      padding: 0.7rem;
+      font-size: 1rem;
+      border: 1px solid #999;
+      border-radius: 6px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .row { display: flex; gap: 0.6rem; }
+    .row > div { flex: 1; }
+    label { font-size: 0.85rem; opacity: 0.8; }
+    button {
+      padding: 0.9rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+    }
+    button:active { background: #1d4ed8; }
+    .hit {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .hit-meta {
+      font-size: 0.85rem;
+      opacity: 0.75;
+      margin-bottom: 0.4rem;
+    }
+    .hit-excerpt { white-space: pre-wrap; }
+    .empty { opacity: 0.7; }
+    details { margin-bottom: 0.2rem; }
+    summary { cursor: pointer; font-size: 0.9rem; }
+    footer { font-size: 0.8rem; opacity: 0.7; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>Medizinische Literatursuche</h1>
+
+  <form method="get" action="/">
+    <input type="text" name="q" value="{{ query }}" placeholder="Suchfrage eingeben..." required>
+
+    <details {% if source %}open{% endif %}>
+      <summary>Erweiterte Optionen</summary>
+      <div class="row" style="margin-top:0.6rem;">
+        <div>
+          <label for="top_k">Anzahl Treffer</label>
+          <input type="number" id="top_k" name="top_k" value="{{ top_k }}" min="1" max="50">
+        </div>
+        <div>
+          <label for="source">Nur Datei (optional)</label>
+          <input type="text" id="source" name="source" value="{{ source }}" placeholder="z.B. leitlinie.pdf">
+        </div>
+      </div>
+    </details>
+
+    <button type="submit">Suchen</button>
+  </form>
+
+  {% if searched %}
+    {% if hits %}
+      {% for hit in hits %}
+        <div class="hit">
+          <div class="hit-meta">
+            Quelle: {{ hit.source_file }} &middot;
+            Seite: {% if hit.page_number is not none and hit.page_number >= 0 %}{{ hit.page_number }}{% else %}unbekannt{% endif %} &middot;
+            Score: {{ hit.score }}
+          </div>
+          <div class="hit-excerpt">{{ hit.excerpt }}</div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="empty">Keine Treffer für "{{ query }}" gefunden.</p>
+    {% endif %}
+  {% endif %}
+
+  <footer>
+    Hinweis: Diese Suche ist eine Literaturhilfe, keine Diagnosemaschine.
+    Bei konkreten Beschwerden bitte ärztlich abklären lassen.
+  </footer>
+</body>
+</html>

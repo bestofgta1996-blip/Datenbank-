@@ -79,7 +79,38 @@ python src/search.py "Suchfrage" --json              # Ausgabe als JSON
 
 Weitere Beispiele in [`examples/example_queries.md`](examples/example_queries.md).
 
-## 6. Neue Dateien ergänzen
+## 6. Weboberfläche starten (auch vom Handy nutzbar)
+
+Statt der Kommandozeile kannst du auch eine einfache, mobil-taugliche
+Weboberfläche im Browser nutzen:
+
+```bash
+python src/webapp.py
+```
+
+Auf demselben Rechner öffnest du dann im Browser:
+
+```
+http://localhost:5000
+```
+
+**Vom Handy aus** (im **gleichen WLAN** wie dein Rechner): finde zuerst die
+lokale IP-Adresse deines Rechners heraus:
+
+```bash
+# Linux/Mac
+hostname -I
+# Windows (PowerShell)
+ipconfig
+```
+
+Rufe dann auf dem Handy im Browser z.B. `http://192.168.1.23:5000` auf
+(deine IP sieht anders aus). Die Oberfläche läuft komplett lokal in deinem
+Heimnetzwerk - es werden keine Daten ins Internet geschickt und keine
+Zugangsdaten benötigt. Genau deshalb ist sie **nur im gleichen WLAN**
+erreichbar, nicht von unterwegs über das Internet.
+
+## 7. Neue Dateien ergänzen
 
 Einfach weitere Dateien in `knowledge/raw/` legen und erneut ausführen:
 
@@ -88,9 +119,10 @@ python src/ingest.py
 ```
 
 Bereits verarbeitete, unveränderte Dateien werden übersprungen - es werden
-nur die neuen bzw. geänderten Dateien verarbeitet.
+nur die neuen bzw. geänderten Dateien verarbeitet. Die Weboberfläche zeigt
+danach automatisch die neuen Treffer mit an (kein Neustart nötig).
 
-## 7. Index komplett neu bauen
+## 8. Index komplett neu bauen
 
 Falls du z.B. das Embedding-Modell in `src/config.py` (`EMBEDDING_MODEL`)
 wechselst, musst du den Index neu bauen, da sich die Embeddings ändern:
@@ -101,7 +133,7 @@ rm -f knowledge/processed/manifest.json
 python src/ingest.py
 ```
 
-## 8. Wichtiger Hinweis
+## 9. Wichtiger Hinweis
 
 Dieses System ist **keine Diagnosemaschine**, sondern eine Hilfe, um in
 deiner eigenen Literatur gezielt Textstellen zu finden. Bei konkreten
@@ -126,6 +158,8 @@ nur indexiert werden, wenn du die entsprechenden Nutzungsrechte hast.
 │  ├─ processed/          Manifest mit bereits verarbeiteten Datei-Hashes
 │  └─ index/              lokale ChromaDB-Datenbank
 ├─ src/
+│  ├─ webapp.py           mobil-taugliche Weboberfläche (Flask, nur Heimnetzwerk)
+│  ├─ templates/          HTML-Vorlage für die Weboberfläche
 │  ├─ ingest.py           liest Dateien ein, chunked, erstellt Embeddings
 │  ├─ search.py           Kommandozeilen-Suche
 │  ├─ utils.py            Hilfsfunktionen (Hash, Chunking, Logging, ...)
@@ -144,7 +178,7 @@ im Terminal auf, statt dass du ganze Bücher in den Chat kopieren musst.
 
 ## Roadmap (spätere, mögliche Erweiterungen - nicht Teil des MVP)
 
-- Einfache Weboberfläche statt Kommandozeile
+- Zugriff auf die Weboberfläche auch von unterwegs (z.B. via Tailscale/VPN), inkl. Login/HTTPS-Absicherung
 - MCP-Anbindung, damit Claude direkt (ohne Terminal-Aufruf) suchen kann
 - Automatischer Importer für PubMed/Leitlinien-Datenbanken
 - Wechsel auf ein medizinisches Embedding-Modell (z.B. PubMedBERT-basiert)
