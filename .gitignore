@@ -1,0 +1,14 @@
+# Rohdateien (Bücher, PDFs, Leitlinien) und die daraus gebaute Datenbank
+# gehören NICHT ins Git-Repo - oft aus Urheberrechtsgründen, außerdem
+# können sie sehr groß werden. Nur die Ordnerstruktur (.gitkeep) bleibt.
+knowledge/raw/*
+!knowledge/raw/.gitkeep
+knowledge/processed/*
+!knowledge/processed/.gitkeep
+knowledge/index/*
+!knowledge/index/.gitkeep
+
+__pycache__/
+*.pyc
+.venv/
+venv/
