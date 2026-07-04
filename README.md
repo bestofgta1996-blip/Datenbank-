@@ -12,6 +12,46 @@ stellt keine Diagnosen und ersetzt keine ärztliche Abklärung.
 
 ---
 
+## Schnellstart (empfohlen)
+
+Dieses Projekt läuft **auf deinem eigenen Rechner** - nicht in der Cloud
+und nicht in einem Chat-Fenster. Du musst es also einmal auf deinen
+Computer herunterladen und dort starten. Voraussetzung: [Python 3](https://www.python.org/downloads/)
+ist installiert (bei "python3 --version" bzw. "python --version" sollte
+eine Version angezeigt werden).
+
+**1. Projekt herunterladen** (einmalig, per Terminal/Eingabeaufforderung):
+
+```bash
+git clone https://github.com/bestofgta1996-blip/Datenbank-.git
+cd Datenbank-
+git checkout claude/medical-literature-rag
+```
+
+Falls du kein `git` hast: oben auf GitHub auf "Code" → "Download ZIP"
+klicken, entpacken, und im entpackten Ordner ein Terminal öffnen.
+
+**2. Startskript ausführen:**
+
+- **Mac/Linux:** `bash start.sh`
+- **Windows:** Doppelklick auf `start.bat` (oder `start.bat` in der
+  Eingabeaufforderung ausführen)
+
+Das Skript richtet beim ersten Mal automatisch alles ein (virtuelle
+Umgebung, Abhängigkeiten, Such-Index) und startet danach die
+Weboberfläche. Anschließend im Browser öffnen:
+
+```
+http://localhost:5000
+```
+
+Vom Handy aus (gleiches WLAN): siehe Abschnitt 6 weiter unten.
+
+Die folgenden Abschnitte erklären die einzelnen Schritte im Detail, falls
+du sie manuell statt über das Startskript ausführen möchtest.
+
+---
+
 ## 1. Virtuelle Umgebung erstellen
 
 Im Hauptverzeichnis dieses Repos:
